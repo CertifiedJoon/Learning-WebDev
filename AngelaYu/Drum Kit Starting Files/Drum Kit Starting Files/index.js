@@ -1,7 +1,3 @@
-var x = document.querySelectorAll("button");
-for (i = 0; i < x.length; ++i) {
-  x[i].addEventListener("click", handleClick);
-}
 
 function play_sound(key) {
   var audio = new Audio("sounds/tom-1.mp3");
@@ -34,9 +30,32 @@ function play_sound(key) {
   audio.play();
 }
 
+function buttonAnimation(currentKey) {
+  var activeButton = document.querySelector("."+currentKey);
+  activeButton.classList.add("pressed");
+  
+  setTimeout(function() {
+    activeButton.classList.remove("pressed");
+  }, 100);
+  
+}
+
 function handleClick() {
   this.style.color = "white";
+  buttonAnimation(this.innerHTML);
   play_sound(this.innerHTML);
 }
 
-document.addEvenListener("keypress", function(event) {play_sound(event.key);});
+var x = document.querySelectorAll("button");
+for (i = 0; i < x.length; ++i) {
+  x[i].addEventListener("click", handleClick);
+}
+
+
+document.addEventListener("keypress", function(event) {
+  
+  buttonAnimation(event.key);
+  play_sound(event.key);
+  
+});
+
